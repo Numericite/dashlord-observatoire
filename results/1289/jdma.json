@@ -1,1 +1,1 @@
-{"answersTotal":28141,"satisfaction":{"negative":712,"neutral":3813,"positive":23616},"easy":{"negative":572,"neutral":2818,"positive":22103},"comprehensible":{"negative":343,"neutral":1844,"positive":24076},"dateStart":1664661600000,"dateEnd":1696111199999}
+{"code":403,"contactEmail":null,"description":"The server understood the request, but is refusing to fulfill it","homeRef":"/","reasonPhrase":"Forbidden","uri":"http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.4.4"}
