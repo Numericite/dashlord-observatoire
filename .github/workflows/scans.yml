@@ -12,6 +12,8 @@ concurrency:
 
 jobs:
   init:
+    # waiting for new devs JDMA 2.0
+    if: false
     runs-on: ubuntu-latest
     name: Prepare
     outputs:
@@ -28,6 +30,8 @@ jobs:
           output: airtable-procedures_urls.json
 
   scans:
+    # waiting for new devs JDMA 2.0
+    if: false
     runs-on: ubuntu-latest
     name: Scan
     needs: init
