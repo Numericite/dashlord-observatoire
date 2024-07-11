@@ -12,8 +12,6 @@ concurrency:
 
 jobs:
   init:
-    # waiting for new devs JDMA 2.0
-    if: false
     runs-on: ubuntu-latest
     name: Prepare
     outputs:
@@ -30,8 +28,6 @@ jobs:
           output: airtable-procedures_urls.json
 
   scans:
-    # waiting for new devs JDMA 2.0
-    if: false
     runs-on: ubuntu-latest
     name: Scan
     needs: init
@@ -75,8 +71,7 @@ jobs:
           id: ${{ matrix.sites.id }}
           startDate: ${{ matrix.sites.startDate }}
           endDate: ${{ matrix.sites.endDate }}
-          xwiki_username: ${{ secrets.XWIKI_USERNAME}}
-          xwiki_password: ${{ secrets.XWIKI_PASSWORD }}
+          jdmaToken: ${{ secrets.JDMA_TOKEN}}
           output: scans/jdma.json
 
       # - name: eco-index
