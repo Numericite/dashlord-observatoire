@@ -1,1 +1,14 @@
-{"answersTotal":809,"satisfaction":{"negative":152,"neutral":214,"positive":443},"easy":{"negative":49,"neutral":101,"positive":255},"comprehensible":{"negative":17,"neutral":51,"positive":356},"dateStart":1688162400000,"dateEnd":1719784799999}
+{
+  "data": {
+    "satisfaction": 6.786632390745501,
+    "comprehension": 8.785377358490566,
+    "contact": 4.852941176470588,
+    "autonomy": 1.9047619047619047
+  },
+  "metadata": {
+    "satisfaction_count": 778,
+    "comprehension_count": 424,
+    "contact_count": 17,
+    "autonomy_count": 21
+  }
+}
