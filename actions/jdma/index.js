@@ -23,7 +23,6 @@ const getXWikiJdmaData = (id, startDate, endDate) => {
         product_id: id,
         start_date: startDate,
         end_date: endDate,
-        isXWiki: true,
       },
     },
   };
