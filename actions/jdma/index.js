@@ -42,7 +42,7 @@ const getXWikiJdmaData = (id, startDate, endDate) => {
       const data = json.result?.data?.json;
 
       if (data) {
-        console.log(data);
+        console.log(JSON.stringify(data, null, 2));
       }
     });
   });
