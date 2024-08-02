@@ -1,14 +1,14 @@
 {
   "data": {
-    "satisfaction": 7.813051146384479,
-    "comprehension": 9.30188679245283,
-    "contact": 1.25,
-    "autonomy": 9.03225806451613
+    "satisfaction": 7.799295774647887,
+    "comprehension": 9.289077212806026,
+    "contact": 3,
+    "autonomy": 8.75
   },
   "metadata": {
-    "satisfaction_count": 567,
-    "comprehension_count": 530,
-    "contact_count": 4,
-    "autonomy_count": 31
+    "satisfaction_count": 568,
+    "comprehension_count": 531,
+    "contact_count": 5,
+    "autonomy_count": 32
   }
 }
