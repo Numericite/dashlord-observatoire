@@ -84,9 +84,7 @@ const getAirtableUrls = async (
     body: JSON.stringify({
       product_ids: response.map((record) => record.fields[field_names.id]),
     }),
-  }).catch((e) => {
-    console.error(e);
-  });
+  }).then((res) => console.log(res));
 
   console.log(
     JSON.stringify(
