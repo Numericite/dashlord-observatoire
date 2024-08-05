@@ -39,7 +39,7 @@ const repeatRequest = async (url, headers, filters, offset, records = []) => {
 };
 
 const getAirtableUrls = async (
-  aritable_api_key,
+  airtable_api_key,
   jdma_api_key,
   base_id,
   procedures_table_name,
@@ -51,7 +51,7 @@ const getAirtableUrls = async (
   let response = await repeatRequest(
     `${airtableUrl}/v0/${base_id}/${editions_table_name}`,
     {
-      Authorization: `Bearer ${aritable_api_key}`,
+      Authorization: `Bearer ${airtable_api_key}`,
     },
     {
       filterByFormula: `{Name} = 'Édition actuelle'`,
@@ -68,7 +68,7 @@ const getAirtableUrls = async (
   response = await repeatRequest(
     `https://api.airtable.com/v0/${base_id}/${procedures_table_name}`,
     {
-      Authorization: `Bearer ${aritable_api_key}`,
+      Authorization: `Bearer ${airtable_api_key}`,
     },
     {
       filterByFormula: `FIND('Édition actuelle', ARRAYJOIN({${field_names.edition}}))`,
@@ -82,9 +82,11 @@ const getAirtableUrls = async (
       Authorization: `Bearer ${jdma_api_key}`,
     },
     body: JSON.stringify({
-      product_ids: response.map((record) => record.fields[field_names.id]),
+      product_ids: response
+        .map((record) => record.fields[field_names.id])
+        .filter((id) => !isNaN(parseInt(id))),
     }),
-  }).then((res) => console.log(res));
+  });
 
   console.log(
     JSON.stringify(
