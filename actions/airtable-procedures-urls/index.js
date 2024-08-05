@@ -10,6 +10,9 @@ const field_names = {
   jdmaEndDate: "[Dashlord] - JDMA jusqu'à",
 };
 
+const jdmaURL = "https://jedonnemonavis.numerique.gouv.fr";
+const airtableUrl = "https://api.airtable.com";
+
 const repeatRequest = async (url, headers, filters, offset, records = []) => {
   return fetch(
     `${url}?${new URLSearchParams(filters).toString()}${
@@ -36,7 +39,8 @@ const repeatRequest = async (url, headers, filters, offset, records = []) => {
 };
 
 const getAirtableUrls = async (
-  api_key,
+  aritable_api_key,
+  jdma_api_key,
   base_id,
   procedures_table_name,
   editions_table_name
@@ -45,9 +49,9 @@ const getAirtableUrls = async (
   let endDate = new Date().getTime();
 
   let response = await repeatRequest(
-    `https://api.airtable.com/v0/${base_id}/${editions_table_name}`,
+    `${airtableUrl}/v0/${base_id}/${editions_table_name}`,
     {
-      Authorization: `Bearer ${api_key}`,
+      Authorization: `Bearer ${aritable_api_key}`,
     },
     {
       filterByFormula: `{Name} = 'Édition actuelle'`,
@@ -72,6 +76,16 @@ const getAirtableUrls = async (
     }
   );
 
+  await fetch(`${jdmaURL}/open-api/setTop250`, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${aritable_api_key}`,
+    },
+    body: JSON.stringify({
+      product_ids: response.map((record) => record.id),
+    }),
+  });
+
   console.log(
     JSON.stringify(
       response
@@ -94,6 +108,7 @@ module.exports = { getAirtableUrls };
 
 if (require.main === module) {
   getAirtableUrls(
+    process.argv[process.argv.length - 5],
     process.argv[process.argv.length - 4],
     process.argv[process.argv.length - 3],
     process.argv[process.argv.length - 2],
