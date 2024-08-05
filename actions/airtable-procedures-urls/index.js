@@ -83,7 +83,9 @@ const getAirtableUrls = async (
       Authorization: `Bearer ${jdma_api_key}`,
     },
     body: JSON.stringify({
-      product_ids: response.map((record) => record["fields"][field_names.id]),
+      product_ids: response.map((record) =>
+        parseInt(record["fields"][field_names.id])
+      ),
     }),
   }).catch((e) => {
     console.error(e);
