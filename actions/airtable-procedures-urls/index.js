@@ -68,7 +68,7 @@ const getAirtableUrls = async (
   response = await repeatRequest(
     `https://api.airtable.com/v0/${base_id}/${procedures_table_name}`,
     {
-      Authorization: `Bearer ${api_key}`,
+      Authorization: `Bearer ${aritable_api_key}`,
     },
     {
       // filterByFormula: `AND({${field_names.id}} = '1860' ,FIND('Édition actuelle', ARRAYJOIN({${field_names.edition}})))`,
@@ -79,7 +79,7 @@ const getAirtableUrls = async (
   await fetch(`${jdmaURL}/open-api/setTop250`, {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${aritable_api_key}`,
+      Authorization: `Bearer ${jdma_api_key}`,
     },
     body: JSON.stringify({
       product_ids: response.map((record) => record.id),
