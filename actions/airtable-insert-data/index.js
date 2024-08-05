@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const field_names = {
-  id: "ID",
+  id: "ID_JDMA",
   edition: "Lien vers statistiques édition",
   noMaj: "MAJ manuelle de la satisfaction",
   // a11y: '[Dashlord] - Mention accessibilité',
