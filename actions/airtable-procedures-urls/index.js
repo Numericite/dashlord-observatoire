@@ -77,6 +77,7 @@ const getAirtableUrls = async (
   );
 
   await fetch(`${jdmaURL}/open-api/setTop250`, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${jdma_api_key}`,
