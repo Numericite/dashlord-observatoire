@@ -5,15 +5,9 @@ const field_names = {
   id: "ID_JDMA",
   edition: "Lien vers statistiques édition",
   noMaj: "MAJ manuelle de la satisfaction",
-  // a11y: '[Dashlord] - Mention accessibilité',
-  // a11yLink: "[Dashlord] - Lien de la déclaration d'accessibilité",
-  // rgaaTaux: '[Dashlord] - Taux RGAA',
-  // rgaaDate: "[Dashlord] - Date de la déclaration d'accessibilité",
   jdmaCount: "[Dashlord] - JDMA nombre de réponses",
   jdmaSatisfactionCount: "[Dashlord] - JDMA satisfaction nombre de réponses",
   jdmaSatisfactionMark: "[Dashlord] - JDMA satisfaction note",
-  // jdmaEasyCount: '[Dashlord] - JDMA facilité nombre de réponses',
-  // jdmaEasyMark: '[Dashlord] - JDMA facilité note',
   jdmaComprehensionCount: "[Dashlord] - JDMA complexité nombre de réponses",
   jdmaComprehensionMark: "[Dashlord] - JDMA complexité note",
   jdmaAutonomyCount: "[Dashlord] - JDMA autonomie nombre de réponses",
@@ -32,21 +26,6 @@ const insertAirtableData = async (
   jdma_json
 ) => {
   const body = { fields: {} };
-
-  // // A11Y
-  // const a11y = JSON.parse(JSON.parse(a11y_json).toString());
-  // body.fields[field_names.a11y] = a11y.mention
-  //   ? a11y.mention
-  //   : 'Aucune mention';
-  // body.fields[field_names.a11yLink] = a11y.declarationUrl
-  //   ? a11y.declarationUrl
-  //   : '';
-
-  // //RGAA
-  // const rgaa = JSON.parse(JSON.parse(rgaa_json).toString());
-  // body.fields[field_names.rgaaTaux] = rgaa.taux ? rgaa.taux + '%' : '';
-  // body.fields[field_names.rgaaDate] = rgaa.date ? rgaa.date : '';
-  //JDMA
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
 
   if (!jdma.data || !jdma.metadata) {
