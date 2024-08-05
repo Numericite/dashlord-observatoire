@@ -71,7 +71,6 @@ const getAirtableUrls = async (
       Authorization: `Bearer ${aritable_api_key}`,
     },
     {
-      // filterByFormula: `AND({${field_names.id}} = '1860' ,FIND('Édition actuelle', ARRAYJOIN({${field_names.edition}})))`,
       filterByFormula: `FIND('Édition actuelle', ARRAYJOIN({${field_names.edition}}))`,
     }
   );
