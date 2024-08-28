@@ -12,8 +12,11 @@ const field_names = {
   jdmaComprehensionMark: "[Dashlord] - JDMA complexité note",
   jdmaAutonomyCount: "[Dashlord] - JDMA autonomie nombre de réponses",
   jdmaAutonomyMark: "[Dashlord] - JDMA autonomie note",
-  jdmaContactCount: "[Dashlord] - JDMA aide nombre de réponses",
-  jdmaContactMark: "[Dashlord] - JDMA aide note",
+  jdmaContactCount:
+    "[Dashlord] - JDMA aide joignable et efficace nombre de réponses",
+  jdmaContactMark: "[Dashlord] - JDMA aide joignable et efficace note",
+  jdmaContactReachabilityMark: "[Dashlord] - JDMA aide joignable note",
+  jdmaContactSatisfactionMark: "[Dashlord] - JDMA aide efficace note",
 };
 
 const insertAirtableData = async (
@@ -65,13 +68,25 @@ const insertAirtableData = async (
     body.fields[field_names.jdmaAutonomyMark] = jdma.data.autonomy;
   }
 
-  // jdma help
+  // jdma help reachable & efficient
   if (
     jdma.data.contact !== undefined &&
     jdma.metadata.contact_count !== undefined
   ) {
     body.fields[field_names.jdmaContactCount] = jdma.metadata.contact_count;
     body.fields[field_names.jdmaContactMark] = jdma.data.contact;
+  }
+
+  // jdma help reachable
+  if (jdma.data.contact_reachability !== undefined) {
+    body.fields[field_names.jdmaContactReachabilityMark] =
+      jdma.data.contact_reachability;
+  }
+
+  // jdma help efficient
+  if (jdma.data.contact_satisfaction !== undefined) {
+    body.fields[field_names.jdmaContactSatisfactionMark] =
+      jdma.data.contact_satisfaction;
   }
 
   console.log("body jdma count : ", body.fields[field_names.jdmaCount]);
@@ -106,6 +121,14 @@ const insertAirtableData = async (
   console.log(
     "body jdma contact mark : ",
     body.fields[field_names.jdmaContactMark]
+  );
+  console.log(
+    "body jdma contact reachability mark : ",
+    body.fields[field_names.jdmaContactReachabilityMark]
+  );
+  console.log(
+    "body jdma contact satisfaction mark : ",
+    body.fields[field_names.jdmaContactSatisfactionMark]
   );
 
   let response = await fetch(
