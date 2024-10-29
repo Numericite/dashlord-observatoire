@@ -7,7 +7,9 @@ const field_names = {
   noMaj: "MAJ manuelle de la satisfaction",
   jdmaCount: "[Dashlord] - JDMA nombre de réponses",
   jdmaSatisfactionCount: "[Dashlord] - JDMA satisfaction nombre de réponses",
+  jdmaSatisfactionCount3M: "[Dashlord] - JDMA satisfaction nombre de réponses (3 mois)",
   jdmaSatisfactionMark: "[Dashlord] - JDMA satisfaction note",
+  jdmaSatisfactionMark3M: "[Dashlord] - JDMA satisfaction note (3 mois)",
   jdmaComprehensionCount: "[Dashlord] - JDMA complexité nombre de réponses",
   jdmaComprehensionMark: "[Dashlord] - JDMA complexité note",
   jdmaAutonomyCount: "[Dashlord] - JDMA autonomie nombre de réponses",
@@ -26,10 +28,12 @@ const insertAirtableData = async (
   procedures_table_name,
   a11y_json,
   rgaa_json,
-  jdma_json
+  jdma_json,
+  jdma_3months_json
 ) => {
   const body = { fields: {} };
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
+  const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
 
   if (!jdma.data || !jdma.metadata) {
     process.exit();
@@ -47,6 +51,17 @@ const insertAirtableData = async (
     body.fields[field_names.jdmaSatisfactionCount] =
       jdma.metadata.satisfaction_count;
     body.fields[field_names.jdmaSatisfactionMark] = jdma.data.satisfaction;
+  }
+
+  // 3 months jdma satisfaction
+  if (
+    jdma_3months.data.satisfaction !== undefined &&
+    jdma_3months.metadata.satisfaction_count !== undefined
+  ) {
+    body.fields[field_names.jdmaSatisfactionCount3M] =
+      jdma_3months.metadata.satisfaction_count;
+    body.fields[field_names.jdmaSatisfactionMark3M] =
+      jdma_3months.data.satisfaction
   }
 
   // jdma comprehension
@@ -97,6 +112,14 @@ const insertAirtableData = async (
   console.log(
     "body jdma satisfaction mark : ",
     body.fields[field_names.jdmaSatisfactionMark]
+  );
+  console.log(
+    "body jdma satisfaction count 3 months : ",
+    body.fields[field_names.jdmaSatisfactionCount3M]
+  );
+  console.log(
+    "body jdma satisfaction mark 3 months : ",
+    body.fields[field_names.jdmaSatisfactionMark3M]
   );
   console.log(
     "body jdma comprehension count : ",
@@ -174,6 +197,7 @@ module.exports = { insertAirtableData };
 
 if (require.main === module) {
   insertAirtableData(
+    process.argv[process.argv.length - 8],
     process.argv[process.argv.length - 7],
     process.argv[process.argv.length - 6],
     process.argv[process.argv.length - 5],

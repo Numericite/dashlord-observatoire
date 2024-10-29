@@ -38,6 +38,10 @@ runs:
         if test -f "jdma.json"; then
           JDMA=$(cat jdma.json | jq -R .)
         fi
+        JDMA_3M=$(echo "{}" | jq -R .)
+        if test -f "jdma_3months.json"; then
+          JDMA_3M=$(cat jdma_3months.json | jq -R .)
+        fi
         cd ${{ github.action_path }}
         yarn
-        node index ${{ inputs.id }} ${{ inputs.airtable_api_key }} ${{ inputs.airtable_base_id }} ${{ inputs.airtable_table_name }} "${A11Y}" "${RGAA}" "${JDMA}"
+        node index ${{ inputs.id }} ${{ inputs.airtable_api_key }} ${{ inputs.airtable_base_id }} ${{ inputs.airtable_table_name }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}"
