@@ -16,16 +16,35 @@ const encodeQueryParams = (params) => {
     .join("&");
 };
 
-const getXWikiJdmaData = (id, startDate, endDate) => {
-  const params = {
-    input: {
-      json: {
-        product_id: id,
-        start_date: startDate,
-        end_date: endDate,
+const getXWikiJdmaData = (id, startDate, endDate, fromLastThreeMonth) => {
+  let params;
+
+  if(JSON.parse(fromLastThreeMonth)) {
+    const threeMonthAgo = new Date(new Date().setMonth(new Date().getMonth() - 3)).getTime();
+    const newStartDate = threeMonthAgo > parseInt(startDate) ? threeMonthAgo : parseInt(startDate);
+    const newEndDate = new Date().getTime() < parseInt(endDate) ? new Date().getTime() : parseInt(endDate);
+
+    params = {
+      input: {
+        json: {
+          product_id: id,
+          start_date: newStartDate.toString(),
+          end_date: newEndDate.toString(),
+        },
       },
-    },
-  };
+    };
+
+  } else {
+    params = {
+      input: {
+        json: {
+          product_id: id,
+          start_date: startDate,
+          end_date: endDate,
+        },
+      },
+    };
+  }
 
   const url = `https://jedonnemonavis.numerique.gouv.fr/api/trpc/answer.getObservatoireStats?${encodeQueryParams(
     params
@@ -51,6 +70,7 @@ module.exports = { getXWikiJdmaData };
 
 if (require.main === module) {
   getXWikiJdmaData(
+    process.argv[process.argv.length - 4],
     process.argv[process.argv.length - 3],
     process.argv[process.argv.length - 2],
     process.argv[process.argv.length - 1]

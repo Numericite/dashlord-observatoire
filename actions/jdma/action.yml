@@ -11,16 +11,14 @@ inputs:
   endDate:
     description: "Get data to this date"
     required: false
-  xwiki_username:
-    description: "Username xWiki for rest authentification"
-    required: true
-  xwiki_password:
-    description: "Password xWiki for rest authentification"
-    required: true
   output:
     description: "Path to output file. defaults to jdma.json"
     default: "jdma.json"
     required: true
+  output2:
+    description: "Path to output file. defaults to jdma2.json"
+    default: "jdma2.json"
+    required: false
 
 runs:
   using: "composite"
@@ -34,5 +32,12 @@ runs:
       shell: bash
       run: |
         cd ${{ github.action_path }}
-        node index ${{ inputs.id }} ${{ inputs.startDate }} ${{ inputs.endDate }} ${{ inputs.xwiki_username }} ${{ inputs.xwiki_password }} > ${{ github.workspace }}/${{ inputs.output }}
+        node index ${{ inputs.id }} ${{ inputs.startDate }} ${{ inputs.endDate }} false > ${{ github.workspace }}/${{ inputs.output }}
         cat ${{ github.workspace }}/${{ inputs.output }}
+    - name: JDMA retrieve last 3 months data
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        node index ${{ inputs.id }} ${{ inputs.startDate }} ${{ inputs.endDate }} true > ${{ github.workspace }}/${{ inputs.output2 }}
+        cat ${{ github.workspace }}/${{ inputs.output2 }}
+

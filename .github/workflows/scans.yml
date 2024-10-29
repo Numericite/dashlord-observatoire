@@ -73,6 +73,7 @@ jobs:
           startDate: ${{ matrix.sites.startDate }}
           endDate: ${{ matrix.sites.endDate }}
           output: scans/jdma.json
+          output2: scans/jdma_3months.json
 
       # - name: eco-index
       #   timeout-minutes: 2
