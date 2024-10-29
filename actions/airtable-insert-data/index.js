@@ -35,7 +35,7 @@ const insertAirtableData = async (
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
 
-  if (!jdma.data || !jdma.metadata) {
+  if (!jdma.data || !jdma.metadata || !jdma_3months.data || !jdma_3months.metadata) {
     process.exit();
   }
 
