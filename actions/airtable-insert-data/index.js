@@ -37,7 +37,7 @@ const insertAirtableData = async (
   const body = { fields: {} };
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
-  const updown_json = JSON.parse(JSON.parse(updown_json).toString());
+  const updown = JSON.parse(JSON.parse(updown_json).toString());
 
   if (!jdma.data || !jdma.metadata || !jdma_3months.data || !jdma_3months.metadata) {
     process.exit();
@@ -109,16 +109,16 @@ const insertAirtableData = async (
   }
 
   // updown uptime
-  if (updown_json.uptime !== undefined) {
-    body.fields[field_names.updownUptime] = updown_json.uptime;
+  if (updown.uptime !== undefined) {
+    body.fields[field_names.updownUptime] = updown.uptime;
   }
 
   // updown response time
   if (
-    updown_json.timings !== undefined &&
-    updown_json.timings.response !== undefined
+    updown.timings !== undefined &&
+    updown.timings.response !== undefined
   ) {
-    body.fields[field_names.updownResponseTime] = updown_json.timings.response;
+    body.fields[field_names.updownResponseTime] = updown.timings.response;
   }
 
 
