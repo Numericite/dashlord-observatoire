@@ -32,10 +32,8 @@ const getUpdownData = async (updownToken, updownApiKey, startDate, endDate) => {
     },
   }).then((response) => {
     response.json().then((json) => {
-      const data = json;
-
-      if (data) {
-        console.log(JSON.stringify(data));
+      if (json.uptime) {
+        console.log(JSON.stringify(json));
       }
     });
   });

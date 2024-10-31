@@ -105,7 +105,7 @@ const getAirtableUrls = async (
           link: record.fields[field_names.link]
             ? record.fields[field_names.link].replaceAll("\n", "").trim()
             : "",
-          updownToken: updownUrls.find((item) => item.alias === record.fields[field_names.id])?.token || "not_found",
+          updownToken: updownUrls.find((item) => item.alias == record.fields[field_names.id])?.token || "not_found",
           startDate,
           endDate,
         }))
