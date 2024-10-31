@@ -41,6 +41,7 @@ const repeatRequest = async (url, headers, filters, offset, records = []) => {
 const getAirtableUrls = async (
   airtable_api_key,
   jdma_api_key,
+  updown_api_key,
   base_id,
   procedures_table_name,
   editions_table_name
@@ -88,6 +89,14 @@ const getAirtableUrls = async (
     }),
   });
 
+  const updownUrls = await fetch('https://updown.io/api/checks', {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "X-API-KEY": updown_api_key
+    },
+  }).then(response => response.json());
+
   console.log(
     JSON.stringify(
       response
@@ -96,6 +105,7 @@ const getAirtableUrls = async (
           link: record.fields[field_names.link]
             ? record.fields[field_names.link].replaceAll("\n", "").trim()
             : "",
+          updownToken: updownUrls.find((item) => item.alias === record.fields[field_names.id])?.token || "not_found",
           startDate,
           endDate,
         }))
@@ -110,6 +120,7 @@ module.exports = { getAirtableUrls };
 
 if (require.main === module) {
   getAirtableUrls(
+    process.argv[process.argv.length - 6],
     process.argv[process.argv.length - 5],
     process.argv[process.argv.length - 4],
     process.argv[process.argv.length - 3],

@@ -1,0 +1,35 @@
+name: "UpDown data retrieving"
+description: "Récupération des données UpDown pour une démarche"
+
+inputs:
+  updownToken:
+    description: "Token UpDown associé à la démarche"
+    required: true
+  updownApiKey:
+    description: "Clé API Read-only UpDown"
+    required: true
+  startDate:
+    description: "Get data from this date"
+    required: true
+  endDate:
+    description: "Get data to this date"
+    required: false
+  output:
+    description: "Path to output file. defaults to updown.json"
+    default: "updown.json"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        yarn
+    - name: UpDown retrieve data
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        node index ${{ inputs.updownToken }} ${{ inputs.updownApiKey }} ${{ inputs.startDate }} ${{ inputs.endDate }} > ${{ github.workspace }}/${{ inputs.output }}
+        cat ${{ github.workspace }}/${{ inputs.output }}
