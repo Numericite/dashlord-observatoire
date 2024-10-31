@@ -19,6 +19,8 @@ const field_names = {
   jdmaContactMark: "[Dashlord] - JDMA aide joignable et efficace note",
   jdmaContactReachabilityMark: "[Dashlord] - JDMA aide joignable note",
   jdmaContactSatisfactionMark: "[Dashlord] - JDMA aide efficace note",
+  updownUptime: "[Dashlord] - UpDown disponibilité",
+  updownResponseTime: "[Dashlord] - UpDown temps de réponse",
 };
 
 const insertAirtableData = async (
@@ -29,11 +31,13 @@ const insertAirtableData = async (
   a11y_json,
   rgaa_json,
   jdma_json,
-  jdma_3months_json
+  jdma_3months_json,
+  updown_json
 ) => {
   const body = { fields: {} };
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
+  const updown_json = JSON.parse(JSON.parse(updown_json).toString());
 
   if (!jdma.data || !jdma.metadata || !jdma_3months.data || !jdma_3months.metadata) {
     process.exit();
@@ -104,6 +108,20 @@ const insertAirtableData = async (
       jdma.data.contact_satisfaction;
   }
 
+  // updown uptime
+  if (updown_json.uptime !== undefined) {
+    body.fields[field_names.updownUptime] = updown_json.uptime;
+  }
+
+  // updown response time
+  if (
+    updown_json.timings !== undefined &&
+    updown_json.timings.response !== undefined
+  ) {
+    body.fields[field_names.updownResponseTime] = updown_json.timings.response;
+  }
+
+
   console.log("body jdma count : ", body.fields[field_names.jdmaCount]);
   console.log(
     "body jdma satisfaction count : ",
@@ -153,6 +171,11 @@ const insertAirtableData = async (
     "body jdma contact satisfaction mark : ",
     body.fields[field_names.jdmaContactSatisfactionMark]
   );
+  console.log("body updown uptime : ", body.fields[field_names.updownUptime]);
+  console.log(
+    "body updown response time : ",
+    body.fields[field_names.updownResponseTime]
+  );
 
   let response = await fetch(
     `https://api.airtable.com/v0/${base_id}/${procedures_table_name}?${new URLSearchParams(
@@ -197,6 +220,7 @@ module.exports = { insertAirtableData };
 
 if (require.main === module) {
   insertAirtableData(
+    process.argv[process.argv.length - 9],
     process.argv[process.argv.length - 8],
     process.argv[process.argv.length - 7],
     process.argv[process.argv.length - 6],
