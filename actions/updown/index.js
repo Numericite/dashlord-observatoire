@@ -17,9 +17,15 @@ const encodeQueryParams = (params) => {
 };
 
 const getUpdownData = async (updownToken, updownApiKey, startDate, endDate) => {
+
+  // Get data from the last three months within startDate and endDate
+  const threeMonthAgo = new Date(new Date().setMonth(new Date().getMonth() - 3)).getTime();
+  const newStartDate = threeMonthAgo > parseInt(startDate) ? threeMonthAgo : parseInt(startDate);
+  const newEndDate = new Date().getTime() < parseInt(endDate) ? new Date().getTime() : parseInt(endDate);
+
   const params = {
-    from: startDate,
-    to: endDate,
+    from: new Date(newStartDate).toISOString(),
+    to: new Date(newEndDate).toISOString(),
   };
 
   const metrics_url = `https://updown.io/api/checks/${updownToken}/metrics?${encodeQueryParams(params)}`;
