@@ -110,7 +110,7 @@ const insertAirtableData = async (
 
   // updown uptime
   if (updown.uptime !== undefined) {
-    body.fields[field_names.updownUptime] = updown.uptime;
+    body.fields[field_names.updownUptime] = updown.uptime / 100;
   }
 
   // updown response time
