@@ -7,7 +7,8 @@ const field_names = {
   noMaj: "MAJ manuelle de la satisfaction",
   jdmaCount: "[Dashlord] - JDMA nombre de réponses",
   jdmaSatisfactionCount: "[Dashlord] - JDMA satisfaction nombre de réponses",
-  jdmaSatisfactionCount3M: "[Dashlord] - JDMA satisfaction nombre de réponses (3 mois)",
+  jdmaSatisfactionCount3M:
+    "[Dashlord] - JDMA satisfaction nombre de réponses (3 mois)",
   jdmaSatisfactionMark: "[Dashlord] - JDMA satisfaction note",
   jdmaSatisfactionMark3M: "[Dashlord] - JDMA satisfaction note (3 mois)",
   jdmaComprehensionCount: "[Dashlord] - JDMA complexité nombre de réponses",
@@ -17,7 +18,11 @@ const field_names = {
   jdmaContactCount:
     "[Dashlord] - JDMA aide joignable et efficace nombre de réponses",
   jdmaContactMark: "[Dashlord] - JDMA aide joignable et efficace note",
+  jdmaContactReachabilityCount:
+    "[Dashlord] - JDMA aide joignable nombre de réponses",
   jdmaContactReachabilityMark: "[Dashlord] - JDMA aide joignable note",
+  jdmaContactSatisfactionCount:
+    "[Dashlord] - JDMA aide efficace nombre de réponses",
   jdmaContactSatisfactionMark: "[Dashlord] - JDMA aide efficace note",
   updownUptime: "[Dashlord] - UpDown disponibilité",
   updownResponseTime: "[Dashlord] - UpDown temps de réponse",
@@ -39,7 +44,12 @@ const insertAirtableData = async (
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
   const updown = JSON.parse(JSON.parse(updown_json).toString());
 
-  if (!jdma.data || !jdma.metadata || !jdma_3months.data || !jdma_3months.metadata) {
+  if (
+    !jdma.data ||
+    !jdma.metadata ||
+    !jdma_3months.data ||
+    !jdma_3months.metadata
+  ) {
     process.exit();
   }
 
@@ -65,7 +75,7 @@ const insertAirtableData = async (
     body.fields[field_names.jdmaSatisfactionCount3M] =
       jdma_3months.metadata.satisfaction_count;
     body.fields[field_names.jdmaSatisfactionMark3M] =
-      jdma_3months.data.satisfaction
+      jdma_3months.data.satisfaction;
   }
 
   // jdma comprehension
@@ -98,12 +108,16 @@ const insertAirtableData = async (
 
   // jdma help reachable
   if (jdma.data.contact_reachability !== undefined) {
+    body.fields[field_names.jdmaContactReachabilityCount] =
+      jdma.metadata.contactReachability_count;
     body.fields[field_names.jdmaContactReachabilityMark] =
       jdma.data.contact_reachability;
   }
 
   // jdma help efficient
   if (jdma.data.contact_satisfaction !== undefined) {
+    body.fields[field_names.jdmaContactSatisfactionCount] =
+      jdma.metadata.contactSatisfaction_count;
     body.fields[field_names.jdmaContactSatisfactionMark] =
       jdma.data.contact_satisfaction;
   }
@@ -114,13 +128,9 @@ const insertAirtableData = async (
   }
 
   // updown response time
-  if (
-    updown.timings !== undefined &&
-    updown.timings.response !== undefined
-  ) {
+  if (updown.timings !== undefined && updown.timings.response !== undefined) {
     body.fields[field_names.updownResponseTime] = updown.timings.response;
   }
-
 
   console.log("body jdma count : ", body.fields[field_names.jdmaCount]);
   console.log(
