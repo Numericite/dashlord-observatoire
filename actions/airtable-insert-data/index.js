@@ -221,7 +221,25 @@ const insertAirtableData = async (
       );
       console.log(patchDemarche);
     } else {
-      console.log(`case "${field_names.noMaj}" cochée, pas de mise à jour...`);
+      console.log(`case "${field_names.noMaj}" cochée, mise à jour updown...`);
+      const patchDemarche = await fetch(
+        `https://api.airtable.com/v0/${base_id}/${procedures_table_name}/${record.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${api_key}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fields: {
+              [field_names.updownResponseTime]:
+                body.fields[field_names.updownResponseTime],
+              [field_names.updownUptime]: body.fields[field_names.updownUptime],
+            },
+          }),
+        }
+      );
+      console.log(patchDemarche);
     }
   }
 };
