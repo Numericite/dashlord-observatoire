@@ -64,7 +64,9 @@ const insertAirtableData = async (
   ) {
     body.fields[field_names.jdmaSatisfactionCount] =
       jdma.metadata.satisfaction_count;
-    body.fields[field_names.jdmaSatisfactionMark] = jdma.data.satisfaction;
+    if (jdma.metadata.satisfaction_count > 0) {
+      body.fields[field_names.jdmaSatisfactionMark] = jdma.data.satisfaction;
+    }
   }
 
   // 3 months jdma satisfaction
@@ -74,8 +76,10 @@ const insertAirtableData = async (
   ) {
     body.fields[field_names.jdmaSatisfactionCount3M] =
       jdma_3months.metadata.satisfaction_count;
-    body.fields[field_names.jdmaSatisfactionMark3M] =
-      jdma_3months.data.satisfaction;
+    if (jdma_3months.metadata.satisfaction_count > 0) {
+      body.fields[field_names.jdmaSatisfactionMark3M] =
+        jdma_3months.data.satisfaction;
+    }
   }
 
   // jdma comprehension
@@ -85,7 +89,9 @@ const insertAirtableData = async (
   ) {
     body.fields[field_names.jdmaComprehensionCount] =
       jdma.metadata.comprehension_count;
-    body.fields[field_names.jdmaComprehensionMark] = jdma.data.comprehension;
+    if (jdma.metadata.comprehension_count > 0) {
+      body.fields[field_names.jdmaComprehensionMark] = jdma.data.comprehension;
+    }
   }
 
   // jdma autonomy
@@ -94,7 +100,9 @@ const insertAirtableData = async (
     jdma.metadata.autonomy_count !== undefined
   ) {
     body.fields[field_names.jdmaAutonomyCount] = jdma.metadata.autonomy_count;
-    body.fields[field_names.jdmaAutonomyMark] = jdma.data.autonomy;
+    if (jdma.metadata.autonomy_count > 0) {
+      body.fields[field_names.jdmaAutonomyMark] = jdma.data.autonomy;
+    }
   }
 
   // jdma help reachable & efficient
@@ -103,23 +111,29 @@ const insertAirtableData = async (
     jdma.metadata.contact_count !== undefined
   ) {
     body.fields[field_names.jdmaContactCount] = jdma.metadata.contact_count;
-    body.fields[field_names.jdmaContactMark] = jdma.data.contact;
+    if (jdma.metadata.contact_count > 0) {
+      body.fields[field_names.jdmaContactMark] = jdma.data.contact;
+    }
   }
 
   // jdma help reachable
   if (jdma.data.contact_reachability !== undefined) {
     body.fields[field_names.jdmaContactReachabilityCount] =
       jdma.metadata.contactReachability_count;
-    body.fields[field_names.jdmaContactReachabilityMark] =
-      jdma.data.contact_reachability;
+    if (jdma.metadata.contactReachability_count > 0) {
+      body.fields[field_names.jdmaContactReachabilityMark] =
+        jdma.data.contact_reachability;
+    }
   }
 
   // jdma help efficient
   if (jdma.data.contact_satisfaction !== undefined) {
     body.fields[field_names.jdmaContactSatisfactionCount] =
       jdma.metadata.contactSatisfaction_count;
-    body.fields[field_names.jdmaContactSatisfactionMark] =
-      jdma.data.contact_satisfaction;
+    if (jdma.metadata.contactSatisfaction_count > 0) {
+      body.fields[field_names.jdmaContactSatisfactionMark] =
+        jdma.data.contact_satisfaction;
+    }
   }
 
   // updown uptime
