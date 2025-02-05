@@ -219,7 +219,17 @@ const insertGristData = async (
   );
   const json = await response.json();
 
-  console.log(`Record ${id} to update :`, json);
+  console.log(
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
+      {
+        filter: JSON.stringify({
+          Ref_Demarche: [id],
+          Ref_Edition: [edition_id],
+        }),
+      }
+    ).toString()}`
+  );
+  console.log(`Record ${id} to update on edition ${edition_id} :`, json);
   const record = json.records[0];
 
   if (record) {
