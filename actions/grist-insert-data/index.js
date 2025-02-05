@@ -211,7 +211,6 @@ const insertGristData = async (
     }
   );
   const json = await response.json();
-  console.log(`Record ${id} to update on edition ${edition_id} :`, json);
   const record = json.records[0];
 
   if (record) {
