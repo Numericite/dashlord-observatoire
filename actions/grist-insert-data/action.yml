@@ -2,6 +2,9 @@ name: "Insert procedures data into Grist"
 description: "Insère les données dans grist après le scan"
 
 inputs:
+  id:
+    description: "JDMA ID of the procedure"
+    required: true
   grist_id:
     description: "Grist ID of the procedure"
     required: true
