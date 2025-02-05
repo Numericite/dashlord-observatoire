@@ -203,10 +203,12 @@ const insertGristData = async (
   response = await fetch(
     `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
       {
-        filter: JSON.stringify({
-          Ref_Demarche: [id],
-          Ref_Edition: [edition_id],
-        }),
+        filter: encodeURIComponent(
+          JSON.stringify({
+            Ref_Demarche: [id],
+            Ref_Edition: [edition_id],
+          })
+        ),
       }
     ).toString()}`,
     {
@@ -222,10 +224,12 @@ const insertGristData = async (
   console.log(
     `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
       {
-        filter: JSON.stringify({
-          Ref_Demarche: [id],
-          Ref_Edition: [edition_id],
-        }),
+        filter: encodeURIComponent(
+          JSON.stringify({
+            Ref_Demarche: [id],
+            Ref_Edition: [edition_id],
+          })
+        ),
       }
     ).toString()}`
   );
