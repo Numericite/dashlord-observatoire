@@ -215,7 +215,8 @@ const insertGristData = async (
   );
   const json = await response.json();
 
-  const record = json.records[0];
+  console.log("Record to update : ", json);
+  const record = json[0];
 
   if (record) {
     if (!record.fields[field_names.noMaj]) {
