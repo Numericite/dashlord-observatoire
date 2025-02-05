@@ -18,11 +18,6 @@ const extractProductIdFromJDMAUrl = (url) => {
 };
 
 const repeatRequest = async (url, headers, filters, offset, records = []) => {
-  console.log(
-    `${url}?${new URLSearchParams(filters).toString()}${
-      offset ? `${filters ? "&" : ""}offset=${offset}` : ""
-    }`
-  );
   return fetch(
     `${url}?${new URLSearchParams(filters).toString()}${
       offset ? `${filters ? "&" : ""}offset=${offset}` : ""
