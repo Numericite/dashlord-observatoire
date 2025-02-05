@@ -200,17 +200,17 @@ const insertGristData = async (
     body.fields[field_names.updownResponseTime]
   );
 
+  const recordParams = {
+    filter: encodeURIComponent(
+      JSON.stringify({
+        Ref_Demarche: [id],
+        Ref_Edition: [edition_id],
+      })
+    ),
+  };
+
   response = await fetch(
-    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
-      {
-        filter: encodeURIComponent(
-          JSON.stringify({
-            Ref_Demarche: [id],
-            Ref_Edition: [edition_id],
-          })
-        ),
-      }
-    ).toString()}`,
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?filter=${recordParams.filter}`,
     {
       method: "GET",
       headers: {
@@ -222,16 +222,7 @@ const insertGristData = async (
   const json = await response.json();
 
   console.log(
-    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
-      {
-        filter: encodeURIComponent(
-          JSON.stringify({
-            Ref_Demarche: [id],
-            Ref_Edition: [edition_id],
-          })
-        ),
-      }
-    ).toString()}`
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?filter=${recordParams.filter}`
   );
   console.log(`Record ${id} to update on edition ${edition_id} :`, json);
   const record = json.records[0];
