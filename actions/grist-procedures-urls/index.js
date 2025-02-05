@@ -52,14 +52,14 @@ const getGristUrls = async (
   jdma_api_key,
   updown_api_key,
   base_id,
-  procedures_table_name,
-  editions_table_name
+  procedures_table_id,
+  editions_table_id
 ) => {
   let startDate = new Date(0).getTime();
   let endDate = new Date().getTime();
 
   let response = await repeatRequest(
-    `${gristUrl}/api/docs/${base_id}/tables/${editions_table_name}/records?sort=-Date_Fin&limit=1000`,
+    `${gristUrl}/api/docs/${base_id}/tables/${editions_table_id}/records?sort=-Date_Fin&limit=1000`,
     {
       Authorization: `Bearer ${grist_api_key}`,
     }
@@ -81,7 +81,7 @@ const getGristUrls = async (
   }
 
   response = await repeatRequest(
-    `${gristUrl}/api/docs/${base_id}/tables/${procedures_table_name}/records`,
+    `${gristUrl}/api/docs/${base_id}/tables/${procedures_table_id}/records`,
     {
       Authorization: `Bearer ${grist_api_key}`,
     },
@@ -126,6 +126,7 @@ const getGristUrls = async (
           );
           return {
             id: jdma_id,
+            grist_id: record.id,
             link: record.fields[field_names.link]
               ? record.fields[field_names.link].replaceAll("\n", "").trim()
               : "",

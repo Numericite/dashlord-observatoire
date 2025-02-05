@@ -2,44 +2,42 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const field_names = {
-  id: "ID_JDMA",
-  edition: "Lien vers statistiques édition",
-  noMaj: "MAJ manuelle de la satisfaction",
-  jdmaCount: "[Dashlord] - JDMA nombre de réponses",
-  jdmaSatisfactionCount: "[Dashlord] - JDMA satisfaction nombre de réponses",
+  noMaj: "MaJ_Manuelle_Satisfaction:",
+  jdmaCount: "Dashlord_JDMA_nombre_de_reponses",
+  jdmaSatisfactionCount: "Dashlord_JDMA_satisfaction_nombre_de_reponses",
   jdmaSatisfactionCount3M:
-    "[Dashlord] - JDMA satisfaction nombre de réponses (3 mois)",
-  jdmaSatisfactionMark: "[Dashlord] - JDMA satisfaction note",
-  jdmaSatisfactionMark3M: "[Dashlord] - JDMA satisfaction note (3 mois)",
-  jdmaComprehensionCount: "[Dashlord] - JDMA complexité nombre de réponses",
-  jdmaComprehensionMark: "[Dashlord] - JDMA complexité note",
-  jdmaAutonomyCount: "[Dashlord] - JDMA autonomie nombre de réponses",
-  jdmaAutonomyMark: "[Dashlord] - JDMA autonomie note",
+    "Dashlord_JDMA_satisfaction_nombre_de_reponses_3_mois_",
+  jdmaSatisfactionMark: "Dashlord_JDMA_satisfaction_note",
+  jdmaSatisfactionMark3M: "Dashlord_JDMA_satisfaction_note_3_mois_",
+  jdmaComprehensionCount: "Dashlord_JDMA_complexite_nombre_de_reponses",
+  jdmaComprehensionMark: "Dashlord_JDMA_complexite_note",
+  jdmaAutonomyCount: "Dashlord_JDMA_autonomie_nombre_de_reponses",
+  jdmaAutonomyMark: "Dashlord_JDMA_autonomie_note",
   jdmaContactCount:
-    "[Dashlord] - JDMA aide joignable et efficace nombre de réponses",
-  jdmaContactMark: "[Dashlord] - JDMA aide joignable et efficace note",
+    "Dashlord_JDMA_aide_joignable_et_efficace_nombre_de_reponses",
+  jdmaContactMark: "Dashlord_JDMA_aide_joignable_et_efficace_note",
   jdmaContactReachabilityCount:
-    "[Dashlord] - JDMA aide joignable nombre de réponses",
-  jdmaContactReachabilityMark: "[Dashlord] - JDMA aide joignable note",
+    "Dashlord_JDMA_aide_joignable_nombre_de_reponses",
+  jdmaContactReachabilityMark: "Dashlord_JDMA_aide_joignable_note",
   jdmaContactSatisfactionCount:
-    "[Dashlord] - JDMA aide efficace nombre de réponses",
-  jdmaContactSatisfactionMark: "[Dashlord] - JDMA aide efficace note",
-  updownUptime: "[Dashlord] - UpDown disponibilité",
-  updownResponseTime: "[Dashlord] - UpDown temps de réponse",
+    "Dashlord_JDMA_aide_efficace_nombre_de_reponses",
+  jdmaContactSatisfactionMark: "Dashlord_JDMA_aide_efficace_note",
+  updownUptime: "Dashlord_UpDown_disponibilite",
+  updownResponseTime: "Dashlord_UpDown_temps_de_reponse",
 };
 
 const insertAirtableData = async (
   id,
   api_key,
   base_id,
-  procedures_table_name,
+  procedures_table_id,
   a11y_json,
   rgaa_json,
   jdma_json,
   jdma_3months_json,
   updown_json
 ) => {
-  const body = { fields: {} };
+  const body = { id, fields: {} };
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
   const updown = JSON.parse(JSON.parse(updown_json).toString());
@@ -201,10 +199,10 @@ const insertAirtableData = async (
     body.fields[field_names.updownResponseTime]
   );
 
-  let response = await fetch(
-    `https://api.airtable.com/v0/${base_id}/${procedures_table_name}?${new URLSearchParams(
+  response = await fetch(
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/records${procedures_table_id}?${new URLSearchParams(
       {
-        filterByFormula: `AND({${field_names.id}} = "${id}", FIND('Édition actuelle', ARRAYJOIN({${field_names.edition}})))`,
+        filter: JSON.stringify({ id: [id] }),
       }
     ).toString()}`,
     {
@@ -223,34 +221,38 @@ const insertAirtableData = async (
     if (!record.fields[field_names.noMaj]) {
       console.log("body", JSON.stringify(body));
       const patchDemarche = await fetch(
-        `https://api.airtable.com/v0/${base_id}/${procedures_table_name}/${record.id}`,
+        `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/${record.id}`,
         {
           method: "PATCH",
           headers: {
             Authorization: `Bearer ${api_key}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify([body]),
         }
       );
       console.log(patchDemarche);
     } else {
       console.log(`case "${field_names.noMaj}" cochée, mise à jour updown...`);
       const patchDemarche = await fetch(
-        `https://api.airtable.com/v0/${base_id}/${procedures_table_name}/${record.id}`,
+        `https://api.airtable.com/v0/${base_id}/${procedures_table_id}/records`,
         {
           method: "PATCH",
           headers: {
             Authorization: `Bearer ${api_key}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            fields: {
-              [field_names.updownResponseTime]:
-                body.fields[field_names.updownResponseTime],
-              [field_names.updownUptime]: body.fields[field_names.updownUptime],
+          body: JSON.stringify([
+            {
+              id,
+              fields: {
+                [field_names.updownResponseTime]:
+                  body.fields[field_names.updownResponseTime],
+                [field_names.updownUptime]:
+                  body.fields[field_names.updownUptime],
+              },
             },
-          }),
+          ]),
         }
       );
       console.log(patchDemarche);

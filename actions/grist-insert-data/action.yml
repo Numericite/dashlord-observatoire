@@ -1,28 +1,28 @@
-name: 'Get Airtable procedures URLs to scan'
-description: 'Rapatrier les URLs des démarches via Airtable pour préparer le scan'
+name: "Insert procedures data into Grist"
+description: "Insère les données dans grist après le scan"
 
 inputs:
-  id:
-    description: 'ID of the procedure'
+  grist_id:
+    description: "Grist ID of the procedure"
     required: true
-  airtable_api_key:
-    description: 'Clé API Airtable'
+  grist_api_key:
+    description: "Clé API Grist"
     required: true
-  airtable_base_id:
-    description: 'Identifiant de la base Airtable'
+  grist_base_id:
+    description: "Identifiant de la base Grist"
     required: true
-  airtable_table_name:
-    description: 'Nom de la table Airtable'
+  grist_table_id:
+    description: "ID de la table Grist"
     required: true
 
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Install jq for json parsing
       shell: bash
       run: sudo apt-get install -y jq
-    - id: airtable_urls
-      name: Insert Airtable data
+    - id: grist_urls
+      name: Insert Grist data
       shell: bash
       run: |
         cd ${{ github.workspace }}/results/${{ inputs.id }}
@@ -48,4 +48,4 @@ runs:
         fi
         cd ${{ github.action_path }}
         yarn
-        node index ${{ inputs.id }} ${{ inputs.airtable_api_key }} ${{ inputs.airtable_base_id }} ${{ inputs.airtable_table_name }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
+        node index ${{ inputs.grist_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_name }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
