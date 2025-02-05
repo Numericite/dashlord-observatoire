@@ -219,7 +219,7 @@ const insertGristData = async (
   );
   const json = await response.json();
 
-  console.log("Record to update :", json);
+  console.log(`Record ${id} to update :`, json);
   const record = json.records[0];
 
   if (record) {
