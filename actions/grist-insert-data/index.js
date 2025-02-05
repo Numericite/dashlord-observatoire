@@ -228,7 +228,7 @@ const insertGristData = async (
           body: JSON.stringify([
             {
               id: record.id,
-              fields: [...body.fields],
+              fields: { ...body.fields },
             },
           ]),
         }
