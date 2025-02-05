@@ -200,7 +200,7 @@ const insertGristData = async (
   );
 
   response = await fetch(
-    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/records${procedures_table_id}?${new URLSearchParams(
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
       {
         filter: JSON.stringify({ id: [id] }),
       }
@@ -215,7 +215,7 @@ const insertGristData = async (
   );
   const json = await response.json();
 
-  console.log("Record to update : ", json);
+  console.log("Record to update :", json);
   const record = json[0];
 
   if (record) {
