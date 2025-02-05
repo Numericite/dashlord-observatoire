@@ -48,4 +48,4 @@ runs:
         fi
         cd ${{ github.action_path }}
         yarn
-        node index ${{ inputs.grist_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_name }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
+        node index ${{ inputs.grist_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_id }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
