@@ -54,4 +54,4 @@ jobs:
           grist_id: ${{ matrix.sites.grist_id }}
           grist_api_key: ${{ secrets.GRIST_API_KEY }}
           grist_base_id: ${{ secrets.GRIST_BASE_ID }}
-          grist_table_name: ${{ secrets.GRIST_TABLE_ID }}
+          grist_table_id: ${{ secrets.GRIST_TABLE_ID }}
