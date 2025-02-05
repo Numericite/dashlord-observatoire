@@ -225,12 +225,14 @@ const insertGristData = async (
             Authorization: `Bearer ${api_key}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify([
-            {
-              id: record.id,
-              fields: { ...body.fields },
-            },
-          ]),
+          body: JSON.stringify({
+            records: [
+              {
+                id: record.id,
+                fields: { ...body.fields },
+              },
+            ],
+          }),
         }
       );
       console.log(patchDemarche);
@@ -244,17 +246,19 @@ const insertGristData = async (
             Authorization: `Bearer ${api_key}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify([
-            {
-              id: record.id,
-              fields: {
-                [field_names.updownResponseTime]:
-                  body.fields[field_names.updownResponseTime],
-                [field_names.updownUptime]:
-                  body.fields[field_names.updownUptime],
+          body: JSON.stringify({
+            records: [
+              {
+                id: record.id,
+                fields: {
+                  [field_names.updownResponseTime]:
+                    body.fields[field_names.updownResponseTime],
+                  [field_names.updownUptime]:
+                    body.fields[field_names.updownUptime],
+                },
               },
-            },
-          ]),
+            ],
+          }),
         }
       );
       console.log(patchDemarche);
