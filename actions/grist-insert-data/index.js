@@ -28,6 +28,7 @@ const field_names = {
 
 const insertGristData = async (
   id,
+  edition_id,
   api_key,
   base_id,
   procedures_table_id,
@@ -37,7 +38,7 @@ const insertGristData = async (
   jdma_3months_json,
   updown_json
 ) => {
-  const body = { id, fields: {} };
+  const body = { fields: {} };
   const jdma = JSON.parse(JSON.parse(jdma_json).toString());
   const jdma_3months = JSON.parse(JSON.parse(jdma_3months_json).toString());
   const updown = JSON.parse(JSON.parse(updown_json).toString());
@@ -202,7 +203,10 @@ const insertGristData = async (
   response = await fetch(
     `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?${new URLSearchParams(
       {
-        filter: JSON.stringify({ id: [id] }),
+        filter: JSON.stringify({
+          Ref_Demarche: [id],
+          Ref_Edition: [edition_id],
+        }),
       }
     ).toString()}`,
     {
@@ -216,7 +220,7 @@ const insertGristData = async (
   const json = await response.json();
 
   console.log("Record to update :", json);
-  const record = json[0];
+  const record = json.records[0];
 
   if (record) {
     if (!record.fields[field_names.noMaj]) {
@@ -229,7 +233,12 @@ const insertGristData = async (
             Authorization: `Bearer ${api_key}`,
             "Content-Type": "application/json",
           },
-          body: JSON.stringify([body]),
+          body: JSON.stringify([
+            {
+              id: record.id,
+              fields: [...body.fields],
+            },
+          ]),
         }
       );
       console.log(patchDemarche);
@@ -245,7 +254,7 @@ const insertGristData = async (
           },
           body: JSON.stringify([
             {
-              id,
+              id: record.id,
               fields: {
                 [field_names.updownResponseTime]:
                   body.fields[field_names.updownResponseTime],
@@ -265,6 +274,7 @@ module.exports = { insertGristData };
 
 if (require.main === module) {
   insertGristData(
+    process.argv[process.argv.length - 10],
     process.argv[process.argv.length - 9],
     process.argv[process.argv.length - 8],
     process.argv[process.argv.length - 7],

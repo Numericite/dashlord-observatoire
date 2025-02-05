@@ -3,6 +3,7 @@ const fetch = (...args) =>
 const urlRegex =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 const field_names = {
+  id: "Ref_Demarche",
   url_jdma: "URL_Stats_JDMA",
   link: "URL_Demarche",
   jdmaStartDate: "Dashlord_JDMA_a_partir_de",
@@ -121,7 +122,8 @@ const getGristUrls = async (
           );
           return {
             id: jdma_id,
-            grist_id: record.id,
+            grist_id: record.fields[field_names.id],
+            edition_id: currentEdition.id,
             link: record.fields[field_names.link]
               ? record.fields[field_names.link].replaceAll("\n", "").trim()
               : "",

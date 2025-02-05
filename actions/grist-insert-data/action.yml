@@ -5,6 +5,9 @@ inputs:
   id:
     description: "JDMA ID of the procedure"
     required: true
+  edition_id:
+    description: "Grist ID of the edition"
+    required: true
   grist_id:
     description: "Grist ID of the procedure"
     required: true
@@ -51,4 +54,4 @@ runs:
         fi
         cd ${{ github.action_path }}
         yarn
-        node index ${{ inputs.grist_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_id }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
+        node index ${{ inputs.grist_id }} ${{ inputs.edition_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_id }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
