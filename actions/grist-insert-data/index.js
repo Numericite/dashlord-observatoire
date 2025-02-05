@@ -26,7 +26,7 @@ const field_names = {
   updownResponseTime: "Dashlord_UpDown_temps_de_reponse",
 };
 
-const insertAirtableData = async (
+const insertGristData = async (
   id,
   api_key,
   base_id,
@@ -221,7 +221,7 @@ const insertAirtableData = async (
     if (!record.fields[field_names.noMaj]) {
       console.log("body", JSON.stringify(body));
       const patchDemarche = await fetch(
-        `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/${record.id}`,
+        `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records`,
         {
           method: "PATCH",
           headers: {
@@ -235,7 +235,7 @@ const insertAirtableData = async (
     } else {
       console.log(`case "${field_names.noMaj}" cochée, mise à jour updown...`);
       const patchDemarche = await fetch(
-        `https://api.airtable.com/v0/${base_id}/${procedures_table_id}/records`,
+        `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records`,
         {
           method: "PATCH",
           headers: {
@@ -260,10 +260,10 @@ const insertAirtableData = async (
   }
 };
 
-module.exports = { insertAirtableData };
+module.exports = { insertGristData };
 
 if (require.main === module) {
-  insertAirtableData(
+  insertGristData(
     process.argv[process.argv.length - 9],
     process.argv[process.argv.length - 8],
     process.argv[process.argv.length - 7],

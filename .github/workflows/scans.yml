@@ -26,7 +26,7 @@ jobs:
           updown_api_key: ${{ secrets.UPDOWNIO_API_KEY }}
           grist_base_id: ${{ secrets.GRIST_BASE_ID }}
           grist_procedures_table_id: ${{ secrets.GRIST_TABLE_ID }}
-          grist_editions_table_id: ${{ secrets.ID_EDITIONS_TABLE_NAME }}
+          grist_editions_table_id: ${{ secrets.ID_EDITIONS_TABLE_ID }}
           output: grist-procedures_urls.json
 
   scans:
