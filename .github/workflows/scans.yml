@@ -52,6 +52,7 @@ jobs:
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
       - name: Déclaration a11y
+        if: false
         continue-on-error: true
         uses: "socialgouv/dashlord-actions/declaration-a11y@feat/a11y-output-url"
         id: declaration-a11y
@@ -60,6 +61,7 @@ jobs:
           output: scans/declaration-a11y.json
 
       - name: RGAA
+        if: false
         continue-on-error: true
         if: ${{ steps.declaration-a11y.outputs.url && steps.declaration-a11y.outputs.url != '' }}
         uses: "DISIC/dashlord-observatoire/actions/rgaa@main"
@@ -69,6 +71,7 @@ jobs:
 
       - name: JDMA
         continue-on-error: true
+        if: ${{ matrix.sites.jdma_id != '' && matrix.sites.jdma_id != null }}
         uses: "DISIC/dashlord-observatoire/actions/jdma@main"
         with:
           id: ${{ matrix.sites.jdma_id }}

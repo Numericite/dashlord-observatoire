@@ -8,9 +8,6 @@ inputs:
   edition_id:
     description: "Grist ID of the edition"
     required: true
-  jdma_id:
-    description: "JDMA ID of the procedure"
-    required: true
   grist_api_key:
     description: "Clé API Grist"
     required: true
@@ -31,7 +28,7 @@ runs:
       name: Insert Grist data
       shell: bash
       run: |
-        cd ${{ github.workspace }}/results/${{ inputs.jdma_id }}
+        cd ${{ github.workspace }}/results/${{ inputs.id }}
         A11Y=$(echo "{}" | jq -R .)
         if test -f "declaration-a11y.json"; then
           A11Y=$(cat declaration-a11y.json | jq -R .)
