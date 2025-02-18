@@ -117,9 +117,10 @@ const getGristUrls = async (
     JSON.stringify(
       response
         .map((record) => {
+          const jdma_id = record.fields[field_names.id];
           return {
-            id: record.fields[field_names.id],
-            grist_id: record.fields[field_names.id],
+            id: jdma_id,
+            grist_id: jdma_id,
             edition_id: currentEdition.id,
             link: record.fields[field_names.link]
               ? record.fields[field_names.link].replaceAll("\n", "").trim()
