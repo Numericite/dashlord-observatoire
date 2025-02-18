@@ -99,7 +99,7 @@ const getGristUrls = async (
   //   body: JSON.stringify({
   //     product_ids: response
   //       .map((record) =>
-  //         extractProductIdFromJDMAUrl(record.fields[field_names.url_jdma])
+  //         record.fields[field_names.id]
   //       )
   //       .filter((id) => !isNaN(parseInt(id))),
   //   }),
