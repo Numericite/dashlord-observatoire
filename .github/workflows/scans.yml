@@ -61,9 +61,9 @@ jobs:
           output: scans/declaration-a11y.json
 
       - name: RGAA
-        if: false
         continue-on-error: true
-        if: ${{ steps.declaration-a11y.outputs.url && steps.declaration-a11y.outputs.url != '' }}
+        # if: ${{ steps.declaration-a11y.outputs.url && steps.declaration-a11y.outputs.url != '' }}
+        if: false
         uses: "DISIC/dashlord-observatoire/actions/rgaa@main"
         with:
           declarationUrl: ${{ steps.declaration-a11y.outputs.url }}
