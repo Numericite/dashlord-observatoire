@@ -117,11 +117,8 @@ const getGristUrls = async (
     JSON.stringify(
       response
         .map((record) => {
-          const jdma_id = extractProductIdFromJDMAUrl(
-            record.fields[field_names.url_jdma]
-          );
           return {
-            id: jdma_id,
+            id: record.fields[field_names.id],
             grist_id: record.fields[field_names.id],
             edition_id: currentEdition.id,
             link: record.fields[field_names.link]
