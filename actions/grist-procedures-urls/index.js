@@ -4,7 +4,7 @@ const urlRegex =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 const field_names = {
   id: "Ref_Demarche",
-  url_jdma: "URL_Stats_JDMA",
+  jdma_id: "ID_JDMA",
   link: "URL_Demarche",
   jdmaStartDate: "Dashlord_JDMA_a_partir_de",
   jdmaEndDate: "Dashlord_JDMA_jusqu_a",
@@ -100,7 +100,7 @@ const getGristUrls = async (
   //   body: JSON.stringify({
   //     product_ids: response
   //       .map((record) =>
-  //         extractProductIdFromJDMAUrl(record.fields[field_names.url_jdma])
+  //         record.fields[field_names.jdma_id]
   //       )
   //       .filter((id) => !isNaN(parseInt(id))),
   //   }),
@@ -118,9 +118,7 @@ const getGristUrls = async (
     JSON.stringify(
       response
         .map((record) => {
-          const jdma_id = extractProductIdFromJDMAUrl(
-            record.fields[field_names.url_jdma]
-          );
+          const jdma_id = record.fields[field_names.jdma_id];
           return {
             id: record.fields[field_names.id],
             jdma_id,
