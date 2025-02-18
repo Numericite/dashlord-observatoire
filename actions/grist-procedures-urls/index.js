@@ -14,6 +14,7 @@ const jdmaURL = "https://jedonnemonavis.numerique.gouv.fr";
 const gristUrl = "https://grist.numerique.gouv.fr";
 
 const extractProductIdFromJDMAUrl = (url) => {
+  if (!url) return null;
   const match = url.match(/\/product\/(\d+)\/stats/);
   return match ? parseInt(match[1]) : null;
 };
@@ -99,7 +100,7 @@ const getGristUrls = async (
   //   body: JSON.stringify({
   //     product_ids: response
   //       .map((record) =>
-  //         record.fields[field_names.id]
+  //         extractProductIdFromJDMAUrl(record.fields[field_names.url_jdma])
   //       )
   //       .filter((id) => !isNaN(parseInt(id))),
   //   }),
@@ -117,10 +118,12 @@ const getGristUrls = async (
     JSON.stringify(
       response
         .map((record) => {
-          const jdma_id = record.fields[field_names.id];
+          const jdma_id = extractProductIdFromJDMAUrl(
+            record.fields[field_names.url_jdma]
+          );
           return {
-            id: jdma_id,
-            grist_id: jdma_id,
+            id: record.fields[field_names.id],
+            jdma_id,
             edition_id: currentEdition.id,
             link: record.fields[field_names.link]
               ? record.fields[field_names.link].replaceAll("\n", "").trim()

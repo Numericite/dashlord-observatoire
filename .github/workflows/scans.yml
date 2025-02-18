@@ -71,7 +71,7 @@ jobs:
         continue-on-error: true
         uses: "DISIC/dashlord-observatoire/actions/jdma@main"
         with:
-          id: ${{ matrix.sites.id }}
+          id: ${{ matrix.sites.jdma_id }}
           startDate: ${{ matrix.sites.startDate }}
           endDate: ${{ matrix.sites.endDate }}
           output: scans/jdma.json

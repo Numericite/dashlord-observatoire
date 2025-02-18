@@ -3,13 +3,13 @@ description: "Insère les données dans grist après le scan"
 
 inputs:
   id:
-    description: "JDMA ID of the procedure"
+    description: "Grist ID of the procedure"
     required: true
   edition_id:
     description: "Grist ID of the edition"
     required: true
-  grist_id:
-    description: "Grist ID of the procedure"
+  jdma_id:
+    description: "JDMA ID of the procedure"
     required: true
   grist_api_key:
     description: "Clé API Grist"
@@ -31,7 +31,7 @@ runs:
       name: Insert Grist data
       shell: bash
       run: |
-        cd ${{ github.workspace }}/results/${{ inputs.id }}
+        cd ${{ github.workspace }}/results/${{ inputs.jdma_id }}
         A11Y=$(echo "{}" | jq -R .)
         if test -f "declaration-a11y.json"; then
           A11Y=$(cat declaration-a11y.json | jq -R .)
@@ -54,4 +54,4 @@ runs:
         fi
         cd ${{ github.action_path }}
         yarn
-        node index ${{ inputs.grist_id }} ${{ inputs.edition_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_id }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
+        node index ${{ inputs.id }} ${{ inputs.edition_id }} ${{ inputs.grist_api_key }} ${{ inputs.grist_base_id }} ${{ inputs.grist_table_id }} "${A11Y}" "${RGAA}" "${JDMA}" "${JDMA_3M}" "${UPDOWN}"
