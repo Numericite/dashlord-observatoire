@@ -71,10 +71,10 @@ jobs:
 
       - name: JDMA
         continue-on-error: true
-        if: ${{ matrix.sites.jdma_id != '' && matrix.sites.jdma_id != null }}
+        if: ${{ matrix.sites.id != '' && matrix.sites.id != null }}
         uses: "DISIC/dashlord-observatoire/actions/jdma@main"
         with:
-          id: ${{ matrix.sites.jdma_id }}
+          id: ${{ matrix.sites.id }}
           startDate: ${{ matrix.sites.startDate }}
           endDate: ${{ matrix.sites.endDate }}
           output: scans/jdma.json

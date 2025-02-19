@@ -3,21 +3,13 @@ const fetch = (...args) =>
 const urlRegex =
   /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 const field_names = {
-  id: "Ref_Demarche",
-  jdma_id: "ID_JDMA",
+  id: "ID_JDMA",
   link: "URL_Demarche",
   jdmaStartDate: "Dashlord_JDMA_a_partir_de",
   jdmaEndDate: "Dashlord_JDMA_jusqu_a",
 };
 
-const jdmaURL = "https://jedonnemonavis.numerique.gouv.fr";
 const gristUrl = "https://grist.numerique.gouv.fr";
-
-const extractProductIdFromJDMAUrl = (url) => {
-  if (!url) return null;
-  const match = url.match(/\/product\/(\d+)\/stats/);
-  return match ? parseInt(match[1]) : null;
-};
 
 const repeatRequest = async (url, headers, filters, offset, records = []) => {
   return fetch(
@@ -100,7 +92,7 @@ const getGristUrls = async (
   //   body: JSON.stringify({
   //     product_ids: response
   //       .map((record) =>
-  //         record.fields[field_names.jdma_id]
+  //         record.fields[field_names.id]
   //       )
   //       .filter((id) => !isNaN(parseInt(id))),
   //   }),
@@ -118,10 +110,9 @@ const getGristUrls = async (
     JSON.stringify(
       response
         .map((record) => {
-          const jdma_id = record.fields[field_names.jdma_id];
+          const jdma_id = record.fields[field_names.id];
           return {
-            id: record.fields[field_names.id],
-            jdma_id,
+            id: jdma_id,
             edition_id: currentEdition.id,
             link: record.fields[field_names.link]
               ? record.fields[field_names.link].replaceAll("\n", "").trim()

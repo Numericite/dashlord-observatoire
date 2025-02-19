@@ -3,7 +3,7 @@ description: "Insère les données dans grist après le scan"
 
 inputs:
   id:
-    description: "Grist ID of the procedure"
+    description: "JDMA ID of the procedure"
     required: true
   edition_id:
     description: "Grist ID of the edition"
