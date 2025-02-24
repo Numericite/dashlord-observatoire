@@ -2,8 +2,8 @@ name: DashLord scans
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: "0 1 * * *" # see https://crontab.guru
+  schedule:
+    - cron: "0 1 * * *" # see https://crontab.guru
 
 # allow only one concurrent scan action
 concurrency:
