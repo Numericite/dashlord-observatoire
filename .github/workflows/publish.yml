@@ -2,10 +2,10 @@ name: DashLord publish Grist
 
 on:
   workflow_dispatch:
-  # workflow_run:
-  #   workflows: ["DashLord scans"]
-  #   types:
-  #     - completed
+  workflow_run:
+    workflows: ["DashLord scans"]
+    types:
+      - completed
 
 # allow only one concurrent publish action
 concurrency:
