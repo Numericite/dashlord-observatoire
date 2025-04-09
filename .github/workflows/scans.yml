@@ -17,7 +17,7 @@ jobs:
     outputs:
       json: ${{ steps.init.outputs.json }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - id: init
         uses: "DISIC/dashlord-observatoire/actions/airtable-procedures-urls@main"
         with:
@@ -40,7 +40,7 @@ jobs:
       matrix:
         sites: ${{ fromJson(needs.init.outputs.json) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - run: |
           mkdir scans
