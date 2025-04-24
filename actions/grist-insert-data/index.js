@@ -2,28 +2,21 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 const field_names = {
-  noMaj: "MaJ_Manuelle_Satisfaction:",
-  jdmaCount: "Dashlord_JDMA_nombre_de_reponses",
-  jdmaSatisfactionCount: "Dashlord_JDMA_satisfaction_nombre_de_reponses",
-  jdmaSatisfactionCount3M:
-    "Dashlord_JDMA_satisfaction_nombre_de_reponses_3_mois_",
-  jdmaSatisfactionMark: "Dashlord_JDMA_satisfaction_note",
-  jdmaSatisfactionMark3M: "Dashlord_JDMA_satisfaction_note_3_mois_",
-  jdmaComprehensionCount: "Dashlord_JDMA_complexite_nombre_de_reponses",
-  jdmaComprehensionMark: "Dashlord_JDMA_complexite_note",
-  jdmaAutonomyCount: "Dashlord_JDMA_autonomie_nombre_de_reponses",
-  jdmaAutonomyMark: "Dashlord_JDMA_autonomie_note",
-  jdmaContactCount:
-    "Dashlord_JDMA_aide_joignable_et_efficace_nombre_de_reponses",
-  jdmaContactMark: "Dashlord_JDMA_aide_joignable_et_efficace_note",
-  jdmaContactReachabilityCount:
-    "Dashlord_JDMA_aide_joignable_nombre_de_reponses",
-  jdmaContactReachabilityMark: "Dashlord_JDMA_aide_joignable_note",
-  jdmaContactSatisfactionCount:
-    "Dashlord_JDMA_aide_efficace_nombre_de_reponses",
-  jdmaContactSatisfactionMark: "Dashlord_JDMA_aide_efficace_note",
-  updownUptime: "Dashlord_UpDown_disponibilite",
-  updownResponseTime: "Dashlord_UpDown_temps_de_reponse",
+  noMaj: "MaJ_Manuelle_Satisfaction",
+  jdmaSatisfactionCount: "Dashlord_Satisfaction_12_mois_Nb_Avis",
+  jdmaSatisfactionCount3M: "Dashlord_Satisfaction_3_mois_Nb_Avis",
+  jdmaSatisfactionMark: "Dashlord_Satisfaction_12_mois_Note",
+  jdmaSatisfactionMark3M: "Dashlord_Satisfaction_3_mois_Note",
+  jdmaComprehensionCount: "Dashlord_Clarte_Nb_Avis",
+  jdmaComprehensionMark: "Dashlord_Clarte_Note",
+  jdmaAutonomyCount: "Dashlord_Autonomie_Nb_Avis",
+  jdmaAutonomyMark: "Dashlord_Autonomie_Note",
+  jdmaContactReachabilityCount: "Dashlord_Aide_Joignable_Nb_Avis",
+  jdmaContactReachabilityMark: "Dashlord_Aide_Joignable_Note",
+  jdmaContactSatisfactionCount: "Dashlord_Aide_Efficace_Nb_Avis",
+  jdmaContactSatisfactionMark: "Dashlord_Aide_Efficace_Note",
+  updownUptime: "Dashlord_UpDown_Dispo",
+  updownResponseTime: "Dashlord_UpDown_Tps_Moy_Chargement",
 };
 
 const insertGristData = async (
@@ -51,10 +44,6 @@ const insertGristData = async (
   ) {
     process.exit();
   }
-
-  body.fields[field_names.jdmaCount] = jdma.metadata.satisfaction_count
-    ? parseInt(jdma.metadata.satisfaction_count)
-    : 0;
 
   // jdma satisfaction
   if (
@@ -104,17 +93,6 @@ const insertGristData = async (
     }
   }
 
-  // jdma help reachable & efficient
-  if (
-    jdma.data.contact !== undefined &&
-    jdma.metadata.contact_count !== undefined
-  ) {
-    body.fields[field_names.jdmaContactCount] = jdma.metadata.contact_count;
-    if (jdma.metadata.contact_count > 0) {
-      body.fields[field_names.jdmaContactMark] = jdma.data.contact;
-    }
-  }
-
   // jdma help reachable
   if (jdma.data.contact_reachability !== undefined) {
     body.fields[field_names.jdmaContactReachabilityCount] =
@@ -145,7 +123,6 @@ const insertGristData = async (
     body.fields[field_names.updownResponseTime] = updown.timings.response;
   }
 
-  console.log("body jdma count : ", body.fields[field_names.jdmaCount]);
   console.log(
     "body jdma satisfaction count : ",
     body.fields[field_names.jdmaSatisfactionCount]
@@ -177,14 +154,6 @@ const insertGristData = async (
   console.log(
     "body jdma autonomy mark : ",
     body.fields[field_names.jdmaAutonomyMark]
-  );
-  console.log(
-    "body jdma contact count : ",
-    body.fields[field_names.jdmaContactCount]
-  );
-  console.log(
-    "body jdma contact mark : ",
-    body.fields[field_names.jdmaContactMark]
   );
   console.log(
     "body jdma contact reachability mark : ",
