@@ -170,7 +170,7 @@ const insertGristData = async (
   );
 
   response = await fetch(
-    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?filter=%7B"ID_JDMA"%3A%20%5B${id}%5D%2C%20"Ref_Edition"%3A%20%5B${edition_id}%5D%7D`,
+    `https://grist.numerique.gouv.fr/api/docs/${base_id}/tables/${procedures_table_id}/records?filter=%7B"Dashlord_ID_JDMA"%3A%20%5B${id}%5D%2C%20"Ref_Edition"%3A%20%5B${edition_id}%5D%7D`,
     {
       method: "GET",
       headers: {
