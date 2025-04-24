@@ -48,7 +48,7 @@ const getGristUrls = async (
   let endDate = new Date().getTime();
 
   let response = await repeatRequest(
-    `${gristUrl}/api/docs/${base_id}/tables/${editions_table_id}/records?sort=-Date_Fin&limit=1000`,
+    `${gristUrl}/api/docs/${base_id}/tables/${editions_table_id}/records?sort=-Date_Fin_Edition&limit=1000`,
     {
       Authorization: `Bearer ${grist_api_key}`,
     }
@@ -56,8 +56,8 @@ const getGristUrls = async (
 
   const currentEdition = response.find(
     (edition) =>
-      edition.fields["Date_Fin"] * 1000 >= endDate &&
-      edition.fields["Date_Debut"] * 1000 <= endDate
+      edition.fields["Date_Fin_Edition"] * 1000 >= endDate &&
+      edition.fields["Date_Debut_Edition"] * 1000 <= endDate
   );
 
   if (currentEdition) {
