@@ -19,8 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: init
-        # uses: "DISIC/dashlord-observatoire/actions/grist-procedures-urls@main"
-        uses: "Numericite/dashlord-observatoire/actions/grist-procedures-urls@main"
+        uses: "DISIC/dashlord-observatoire/actions/grist-procedures-urls@main"
         with:
           grist_api_key: ${{ secrets.GRIST_API_KEY }}
           jdma_api_key: ${{ secrets.JDMA_TOKEN }}

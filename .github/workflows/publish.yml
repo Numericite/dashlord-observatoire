@@ -21,8 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - id: init
-        # uses: "DISIC/dashlord-observatoire/actions/grist-procedures-urls@main"
-        uses: "Numericite/dashlord-observatoire/actions/grist-procedures-urls@main"
+        uses: "DISIC/dashlord-observatoire/actions/grist-procedures-urls@main"
         with:
           grist_api_key: ${{ secrets.GRIST_API_KEY }}
           jdma_api_key: ${{ secrets.JDMA_TOKEN }}
@@ -47,8 +46,7 @@ jobs:
 
       - name: Grist insert data
         continue-on-error: true
-        # uses: "DISIC/dashlord-observatoire/actions/grist-insert-data@main"
-        uses: "Numericite/dashlord-observatoire/actions/grist-insert-data@main"
+        uses: "DISIC/dashlord-observatoire/actions/grist-insert-data@main"
         with:
           id: ${{ matrix.sites.id }}
           edition_id: ${{ matrix.sites.edition_id }}
